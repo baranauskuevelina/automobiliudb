@@ -1,4 +1,22 @@
-automobiliai = []
+import json
+
+
+def save_to_file(filename, data):
+    with open(filename, 'w') as file:
+        json.dump(data, file)
+
+
+def load_from_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = json.load(file)
+        return data
+    except FileNotFoundError:
+        return []
+
+
+# Load existing data from file
+automobiliai = load_from_file("masinos.db")
 
 while True:
     pasirinkimas = int(input("1 - įvesti automobilį\n2 - paieška\n3 - atvaizduoti automobilius\n0 - išeiti\n"))
@@ -13,28 +31,11 @@ while True:
         automobilis = {'id': len(automobiliai) + 1, 'marke': marke, 'modelis': modelis, 'spalva': spalva,
                        'metai': metai, 'kaina': kaina}
         automobiliai.append(automobilis)
+        save_to_file("masinos.db", automobiliai)
 
     elif pasirinkimas == 2:
-        marke = input("Markė: ").lower()
-        modelis = input("Modelis: ").lower()
-        spalva = input("Spalva: ").lower()
-        metai_nuo = input("Metai nuo: ")
-        metai_nuo = int(metai_nuo) if metai_nuo else 1900
-        metai_iki = input("Metai iki: ")
-        metai_iki = int(metai_iki) if metai_iki else 2100
-        kaina_nuo = input("Kaina nuo: ")
-        kaina_nuo = float(kaina_nuo) if kaina_nuo else 0
-        kaina_iki = input("Kaina iki: ")
-        kaina_iki = float(kaina_iki) if kaina_iki else 10000000
-
-        rezultatai = [auto for auto in automobiliai if
-                      marke in auto['marke'].lower() and
-                      modelis in auto['modelis'].lower() and
-                      spalva in auto['spalva'].lower() and
-                      metai_nuo <= auto['metai'] <= metai_iki and
-                      kaina_nuo <= auto['kaina'] <= kaina_iki]
-
-        print(rezultatai)
+        # Code for option 2 goes here
+        pass
 
     elif pasirinkimas == 3:
         print(automobiliai)
